@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 
 import api from "../services/api";
 
@@ -22,7 +21,10 @@ export default class RegisterForm extends Component {
 
     console.log(user);
 
+    alert("Cadastro Criado");
+
     this.setState({ name: "", email: "", password: "" });
+    this.props.onRedirectLogin();
   };
 
   render() {

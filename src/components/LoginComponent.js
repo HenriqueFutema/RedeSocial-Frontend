@@ -21,8 +21,10 @@ export default class LoginForm extends Component {
 
     console.log(user);
     const { token } = user.data;
+    const { name } = user.data.user.name;
 
     sessionStorage.setItem("token", token);
+    localStorage.setItem("user", name);
 
     this.props.onRedirectFeed();
   };

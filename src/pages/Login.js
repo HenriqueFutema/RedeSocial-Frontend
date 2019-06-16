@@ -18,13 +18,17 @@ export default class Login extends Component {
     this.props.history.push("/feed");
   };
 
+  onRedirectLogin = () => {
+    this.setState({ formLogar: !this.state.formLogar });
+  };
+
   render() {
     return (
       <div>
         {this.state.formLogar ? (
           <LoginForm onRedirectFeed={this.onRedirectFeed} />
         ) : (
-          <RegisterForm />
+          <RegisterForm onRedirectLogin={this.onRedirectLogin} />
         )}
         <br />
         <br />
