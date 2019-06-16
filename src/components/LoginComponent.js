@@ -21,7 +21,8 @@ export default class LoginForm extends Component {
 
     console.log(user);
     const { token } = user.data;
-    const { name } = user.data.user.name;
+    const { name } = user.data.user;
+    console.log(name);
 
     sessionStorage.setItem("token", token);
     localStorage.setItem("user", name);
