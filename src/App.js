@@ -8,14 +8,12 @@ import Feed from "./pages/Feed";
 
 function App() {
   return (
-    <div>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/" component={Feed} />
-        </Switch>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" component={Login} exact />
+        <Route path="/feed" component={Feed} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
