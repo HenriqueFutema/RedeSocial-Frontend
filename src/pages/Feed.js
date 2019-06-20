@@ -1,16 +1,41 @@
 import React, { Component } from "react";
-
+import api from "../services/api";
 // import { Container } from './styles';
 
 export default class Feed extends Component {
   state = {
-    name: ""
+    name: "",
+    content: ""
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const name = localStorage.getItem("user");
     this.setState({ name: name });
+
+    const token = sessionStorage.getItem("token");
+    const posts = await api.get("posts");
+
+    console.log(posts);
+    console.log(token);
   }
+
+  handleInputChange = e => {
+    this.setState({ content: e.target.value });
+  };
+
+  newPost = async e => {
+    console.log("test");
+
+    e.preventDefault();
+    console.log("test2");
+
+    const { content } = this.state;
+
+    await api.post("posts", { content });
+
+    console.log("deu certo");
+    this.setState({ content: "" });
+  };
 
   onRedirectLogin = () => {
     this.props.history.push("/");
@@ -34,6 +59,15 @@ export default class Feed extends Component {
         ) : (
           <div>
             <h1>Olá {this.state.name}</h1>
+            <form onSubmit={this.newPost}>
+              <input
+                value={this.state.content}
+                onChange={this.handleInputChange}
+                placeholder="Novo Post"
+              />
+              <button type="submit">Novo Post</button>
+            </form>
+
             <button onClick={this.onLogout}>Logout</button>
           </div>
         )}

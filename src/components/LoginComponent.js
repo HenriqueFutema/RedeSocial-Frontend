@@ -19,13 +19,13 @@ export default class LoginForm extends Component {
 
     const user = await api.post("users/signin", { email, password });
 
-    console.log(user);
     const { token } = user.data;
     const { name } = user.data.user;
-    console.log(name);
 
     sessionStorage.setItem("token", token);
     localStorage.setItem("user", name);
+
+    //console.log(sessionStorage.getItem("token"));
 
     this.props.onRedirectFeed();
   };
