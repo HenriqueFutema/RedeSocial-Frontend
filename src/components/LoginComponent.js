@@ -25,7 +25,7 @@ export default class LoginForm extends Component {
     sessionStorage.setItem("token", token);
     localStorage.setItem("user", name);
 
-    //console.log(sessionStorage.getItem("token"));
+    console.log(sessionStorage.getItem("token"));
 
     this.props.onRedirectFeed();
   };

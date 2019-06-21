@@ -12,7 +12,7 @@ export default class Feed extends Component {
     const name = localStorage.getItem("user");
     this.setState({ name: name });
 
-    const token = sessionStorage.getItem("token");
+    const token = await sessionStorage.getItem("token");
     const posts = await api.get("posts");
 
     console.log(posts);
@@ -27,7 +27,6 @@ export default class Feed extends Component {
     console.log("test");
 
     e.preventDefault();
-    console.log("test2");
 
     const { content } = this.state;
 
