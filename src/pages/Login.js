@@ -26,13 +26,18 @@ export default class Login extends Component {
     return (
       <div>
         {this.state.formLogar ? (
-          <LoginForm onRedirectFeed={this.onRedirectFeed} />
+          <LoginForm
+            onRedirectFeed={this.onRedirectFeed}
+            onChangeForm={this.onChangeForm}
+          />
         ) : (
-          <RegisterForm onRedirectLogin={this.onRedirectLogin} />
+          <RegisterForm
+            onRedirectLogin={this.onRedirectLogin}
+            onChangeForm={this.onChangeForm}
+          />
         )}
         <br />
         <br />
-        <button onClick={this.onChangeForm}>Trocar</button>
       </div>
     );
   }

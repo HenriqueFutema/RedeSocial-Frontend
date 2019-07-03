@@ -32,25 +32,39 @@ export default class LoginForm extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Login</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            value={this.state.email}
-            name="email"
-            placeholder="Email"
-            onChange={this.handleInput}
-          />
-          <input
-            type="password"
-            value={this.state.password}
-            name="password"
-            placeholder="Senha"
-            onChange={this.handleInput}
-          />
-          <button type="submit">Login</button>
-        </form>
+      <div className="container">
+        <div className="row justify-content-md-center mt-4 text-center">
+          <div className="col col-lg-4 border">
+            <h1>Login</h1>
+            <form onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                className="form-control my-2"
+                value={this.state.email}
+                name="email"
+                placeholder="Email"
+                onChange={this.handleInput}
+              />
+              <input
+                type="password"
+                className="form-control my-2"
+                value={this.state.password}
+                name="password"
+                placeholder="Senha"
+                onChange={this.handleInput}
+              />
+              <button className="btn btn-success my-2" type="submit">
+                Login
+              </button>
+            </form>
+            <button
+              onClick={this.props.onChangeForm}
+              className="btn btn-link float-left"
+            >
+              Trocar
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
