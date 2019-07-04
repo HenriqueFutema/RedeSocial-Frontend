@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import api from "../services/api";
 // import { Container } from './styles';
 
+import Post from "../components/Post";
+
 export default class Feed extends Component {
   state = {
     name: "",
-    content: ""
+    content: "",
+    posts: []
   };
 
   async componentDidMount() {
@@ -22,8 +25,11 @@ export default class Feed extends Component {
       headers: { Authorization: "Bearer " + token }
     });
 
-    console.log(posts);
+    console.log(posts.data.docs);
     console.log(token);
+    this.setState({
+      posts: posts.data.docs
+    });
   }
 
   handleInputChange = e => {
@@ -82,6 +88,11 @@ export default class Feed extends Component {
                 Novo Post
               </button>
             </form>
+          </div>
+          <div>
+            {this.state.posts.map(post => (
+              <Post key={post._id} post={post} />
+            ))}
           </div>
         </div>
       </div>
