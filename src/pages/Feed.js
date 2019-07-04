@@ -56,27 +56,34 @@ export default class Feed extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.name === "" || this.state.name === undefined ? (
-          <div>
-            <h1>Erro efetue o login</h1>
-            <button onClick={this.onRedirectLogin}>SignIn</button>
-          </div>
-        ) : (
-          <div>
-            <h1>Olá {this.state.name}</h1>
+      <div className="container mt-4">
+        <div className="row">
+          <div className="col col-lg-12">
+            <h1>
+              Olá {this.state.name}
+              <button
+                onClick={this.onLogout}
+                className="btn btn-danger float-right"
+              >
+                Logout
+              </button>
+            </h1>
             <form onSubmit={this.newPost}>
               <input
                 value={this.state.content}
                 onChange={this.handleInputChange}
                 placeholder="Novo Post"
+                className="form-control col-lg-12"
               />
-              <button type="submit">Novo Post</button>
+              <button
+                type="submit"
+                className="btn btn-primary float-right my-3"
+              >
+                Novo Post
+              </button>
             </form>
-
-            <button onClick={this.onLogout}>Logout</button>
           </div>
-        )}
+        </div>
       </div>
     );
   }

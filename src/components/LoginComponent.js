@@ -27,7 +27,7 @@ export default class LoginForm extends Component {
     localStorage.setItem("user", name);
 
     console.log(sessionStorage.getItem("token"));
-    swal("Logado com Sucesso", "success");
+    swal("Logado com Sucesso", "Seja Bem Vindo", "success");
 
     this.props.onRedirectFeed();
   };
