@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import api from "../services/api";
+import swal from "sweetalert";
 
 export default class LoginForm extends Component {
   state = {
@@ -26,6 +27,7 @@ export default class LoginForm extends Component {
     localStorage.setItem("user", name);
 
     console.log(sessionStorage.getItem("token"));
+    swal("Logado com Sucesso", "success");
 
     this.props.onRedirectFeed();
   };

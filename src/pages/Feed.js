@@ -3,85 +3,81 @@ import api from "../services/api";
 // import { Container } from './styles';
 
 export default class Feed extends Component {
-    state = {
-        name: "",
-        content: ""
-    };
+  state = {
+    name: "",
+    content: ""
+  };
 
-    async componentDidMount() {
-        const name = localStorage.getItem("user");
-        this.setState({ name: name });
+  async componentDidMount() {
+    const name = localStorage.getItem("user");
+    this.setState({ name: name });
 
-        const token = await sessionStorage.getItem("token");
+    const token = await sessionStorage.getItem("token");
 
-        if (token === null) {
-            this.props.history.push("/");
-
-        }
-
-        const posts = await api.get("posts");
-
-        console.log(posts);
-        console.log(token);
+    if (token === null) {
+      this.props.history.push("/");
     }
 
-    handleInputChange = e => {
-        this.setState({ content: e.target.value });
-    };
+    const posts = await api.get("posts", {
+      headers: { Authorization: "Bearer " + token }
+    });
 
-    newPost = async e => {
-        console.log("test");
+    console.log(posts);
+    console.log(token);
+  }
 
-        e.preventDefault();
+  handleInputChange = e => {
+    this.setState({ content: e.target.value });
+  };
 
-        const { content } = this.state;
+  newPost = async e => {
+    console.log("test");
 
-        await api.post("posts", { content });
+    e.preventDefault();
 
-        console.log("deu certo");
-        this.setState({ content: "" });
-    };
+    const { content } = this.state;
 
-    onRedirectLogin = () => {
-        this.props.history.push("/");
-    };
+    await api.post("posts", { content });
 
-    onLogout = () => {
-        localStorage.clear();
-        sessionStorage.clear();
+    console.log("deu certo");
+    this.setState({ content: "" });
+  };
 
-        this.props.history.push("/");
-    };
+  onRedirectLogin = () => {
+    this.props.history.push("/");
+  };
 
-    render() {
-        return ( <
-            div > {
-                this.state.name === "" || this.state.name === undefined ? ( <
-                    div >
-                    <
-                    h1 > Erro efetue o login < /h1> <
-                    button onClick = { this.onRedirectLogin } > SignIn < /button> < /
-                    div >
-                ) : ( <
-                    div >
-                    <
-                    h1 > Olá { this.state.name } < /h1> <
-                    form onSubmit = { this.newPost } >
-                    <
-                    input value = { this.state.content }
-                    onChange = { this.handleInputChange }
-                    placeholder = "Novo Post" /
-                    >
-                    <
-                    button type = "submit" > Novo Post < /button> < /
-                    form >
+  onLogout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
 
-                    <
-                    button onClick = { this.onLogout } > Logout < /button> < /
-                    div >
-                )
-            } <
-            /div>
-        );
-    }
+    this.props.history.push("/");
+  };
+
+  render() {
+    return (
+      <div>
+        {this.state.name === "" || this.state.name === undefined ? (
+          <div>
+            <h1>Erro efetue o login</h1>
+            <button onClick={this.onRedirectLogin}>SignIn</button>
+          </div>
+        ) : (
+          <div>
+            <h1>Olá {this.state.name}</h1>
+            <form onSubmit={this.newPost}>
+              <input
+                value={this.state.content}
+                onChange={this.handleInputChange}
+                placeholder="Novo Post"
+              />
+              <button type="submit">Novo Post</button>
+            </form>
+
+            <button onClick={this.onLogout}>Logout</button>
+          </div>
+        )}
+      </div>
+    );
+  }
 }

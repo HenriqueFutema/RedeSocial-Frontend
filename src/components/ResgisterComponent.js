@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-
 import api from "../services/api";
+
+import swal from "sweetalert";
 
 export default class RegisterForm extends Component {
   state = {
@@ -20,11 +21,14 @@ export default class RegisterForm extends Component {
     const user = await api.post("users/signup", { name, email, password });
 
     console.log(user);
+    if (user) {
+      swal("Cadastro Criado", "Agora efetue o seu login", "success");
 
-    alert("Cadastro Criado");
-
-    this.setState({ name: "", email: "", password: "" });
-    this.props.onRedirectLogin();
+      this.setState({ name: "", email: "", password: "" });
+      this.props.onRedirectLogin();
+    } else {
+      swal("Erro", "Cadastre um novo email", "error");
+    }
   };
 
   render() {
