@@ -3,12 +3,14 @@ import api from "../services/api";
 // import { Container } from './styles';
 
 import Post from "../components/Post";
+import swal from "sweetalert";
 
 export default class Feed extends Component {
   state = {
     name: "",
     content: "",
-    posts: []
+    posts: [],
+    token: ""
   };
 
   async componentDidMount() {
@@ -19,10 +21,12 @@ export default class Feed extends Component {
 
     if (token === null) {
       this.props.history.push("/");
+    } else {
+      this.setState({ token: token });
     }
 
     const posts = await api.get("posts", {
-      headers: { Authorization: "Bearer " + token }
+      headers: { Authorization: "Bearer " + this.state.token }
     });
 
     console.log(posts.data.docs);
@@ -41,12 +45,19 @@ export default class Feed extends Component {
 
     e.preventDefault();
 
-    const { content } = this.state;
+    const { content, token } = this.state;
 
-    await api.post("posts", { content });
+    await api.post(
+      "posts",
+      { content },
+      {
+        headers: { Authorization: "Bearer " + token }
+      }
+    );
 
-    console.log("deu certo");
+    swal("Post criado", "Seu post foi criaod com sucesso", "success");
     this.setState({ content: "" });
+    this.componentDidMount();
   };
 
   onRedirectLogin = () => {
@@ -64,7 +75,7 @@ export default class Feed extends Component {
     return (
       <div className="container mt-4">
         <div className="row">
-          <div className="col col-lg-12">
+          <div className="col col-lg-12 col-sm-12">
             <h1>
               Olá {this.state.name}
               <button
@@ -75,7 +86,7 @@ export default class Feed extends Component {
               </button>
             </h1>
             <form onSubmit={this.newPost}>
-              <input
+              <textarea
                 value={this.state.content}
                 onChange={this.handleInputChange}
                 placeholder="Novo Post"
@@ -89,11 +100,9 @@ export default class Feed extends Component {
               </button>
             </form>
           </div>
-          <div>
-            {this.state.posts.map(post => (
-              <Post key={post._id} post={post} />
-            ))}
-          </div>
+          {this.state.posts.map(post => (
+            <Post key={post._id} post={post} />
+          ))}
         </div>
       </div>
     );
