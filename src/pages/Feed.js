@@ -40,7 +40,7 @@ export default class Feed extends Component {
     this.setState({ content: e.target.value });
   };
 
-  newPost = async e => {
+  handleNewPost = async e => {
     console.log("test");
 
     e.preventDefault();
@@ -58,6 +58,19 @@ export default class Feed extends Component {
     swal("Post criado", "Seu post foi criaod com sucesso", "success");
     this.setState({ content: "" });
     this.componentDidMount();
+  };
+
+  handleLike = async id => {
+    console.log(id);
+    const token = await sessionStorage.getItem("token");
+
+    await api.post(
+      `posts/like/${id}`,
+      {},
+      {
+        headers: { Authorization: "Bearer " + token }
+      }
+    );
   };
 
   onRedirectLogin = () => {
@@ -85,7 +98,7 @@ export default class Feed extends Component {
                 Logout
               </button>
             </h1>
-            <form onSubmit={this.newPost}>
+            <form onSubmit={this.handleNewPost}>
               <textarea
                 value={this.state.content}
                 onChange={this.handleInputChange}
@@ -101,7 +114,7 @@ export default class Feed extends Component {
             </form>
           </div>
           {this.state.posts.map(post => (
-            <Post key={post._id} post={post} />
+            <Post key={post._id} post={post} handleLike={this.handleLike} />
           ))}
         </div>
       </div>

@@ -11,7 +11,12 @@ export default class Post extends Component {
         <h6>{this.props.post.content}</h6>
         <p>
           {this.props.post.likes}{" "}
-          <button className="btn btn-sm btn-primary">LIKE</button>
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() => this.props.handleLike(this.props.post._id)}
+          >
+            LIKE
+          </button>
         </p>
       </div>
     );
