@@ -63,7 +63,7 @@ export default class LoginForm extends Component {
               onClick={this.props.onChangeForm}
               className="btn btn-link float-left"
             >
-              Trocar
+              Criar conta.
             </button>
           </div>
         </div>

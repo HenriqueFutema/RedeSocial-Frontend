@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import api from "../services/api";
+import socket from "socket.io-client";
 // import { Container } from './styles';
 
 import Post from "../components/Post";
@@ -34,7 +35,18 @@ export default class Feed extends Component {
     this.setState({
       posts: posts.data.docs
     });
+    this.subscribeToEvents();
   }
+
+  subscribeToEvents = () => {
+    const io = socket("https://rede-futema.herokuapp.com/");
+
+    io.on("post", data => {
+      this.setState({ posts: [data, ...this.state.posts] });
+    });
+
+
+  };
 
   handleInputChange = e => {
     this.setState({ content: e.target.value });
@@ -57,7 +69,6 @@ export default class Feed extends Component {
 
     swal("Post criado", "Seu post foi criaod com sucesso", "success");
     this.setState({ content: "" });
-    this.componentDidMount();
   };
 
   handleLike = async id => {

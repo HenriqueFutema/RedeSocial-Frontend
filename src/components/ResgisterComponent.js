@@ -70,7 +70,7 @@ export default class RegisterForm extends Component {
               onClick={this.props.onChangeForm}
               className="btn btn-link float-left"
             >
-              Trocar
+              Entrar
             </button>
           </div>
         </div>
