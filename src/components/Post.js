@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import api from "../services/api";
 
 import moment from "moment";
+import swal from "sweetalert";
 
 export default class Post extends Component {
   state = {
@@ -14,21 +15,22 @@ export default class Post extends Component {
 
   handleCommentSubmit = async e => {
     e.preventDefault();
-
-    const comment = await api.post(
-      `posts/${this.props.post._id}/comment`,
-      { content: this.state.newComment },
-      {
-        headers: { Authorization: "Bearer " + this.props.token }
-      }
-    );
-    this.setState({ newComment: "" });
-    console.log(this.props.id, comment);
+    if (this.state.newComment !== null) {
+      await api.post(
+        `posts/${this.props.post._id}/comment`,
+        { content: this.state.newComment },
+        {
+          headers: { Authorization: "Bearer " + this.props.token }
+        }
+      );
+      this.setState({ newComment: "" });
+      swal("Comentário criado", `${this.state.newComment}`, "success");
+    }
   };
 
   render() {
     return (
-      <div className="col col-lg-12 border rounded my-2 p-4">
+      <div className="col-12 col-lg-12 border rounded my-2 p-4">
         <p className="float-right">
           {moment(this.props.post.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
         </p>
@@ -46,12 +48,14 @@ export default class Post extends Component {
         <form onSubmit={this.handleCommentSubmit}>
           <input
             type="text"
-            className="col col-lg-10"
+            className="col col-lg-9 m-2"
             placeholder="Novo Comentário"
             value={this.state.newComment}
             onChange={this.handleInputChange}
           />
-          <button type="submit">Novo Comentário</button>
+          <button type="submit" className="col-12 col-lg-2 m-2 btn btn-success">
+            Novo Comentário
+          </button>
         </form>
       </div>
     );
