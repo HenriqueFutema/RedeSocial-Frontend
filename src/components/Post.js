@@ -1,8 +1,31 @@
 import React, { Component } from "react";
+import api from "../services/api";
 
 import moment from "moment";
 
 export default class Post extends Component {
+  state = {
+    newComment: ""
+  };
+
+  handleInputChange = e => {
+    this.setState({ newComment: e.target.value });
+  };
+
+  handleCommentSubmit = async e => {
+    e.preventDefault();
+
+    const comment = await api.post(
+      `posts/${this.props.post._id}/comment`,
+      { content: this.state.newComment },
+      {
+        headers: { Authorization: "Bearer " + this.props.token }
+      }
+    );
+    this.setState({ newComment: "" });
+    console.log(this.props.id, comment);
+  };
+
   render() {
     return (
       <div className="col col-lg-12 border rounded my-2 p-4">
@@ -20,6 +43,16 @@ export default class Post extends Component {
             LIKE
           </button>
         </p>
+        <form onSubmit={this.handleCommentSubmit}>
+          <input
+            type="text"
+            className="col col-lg-10"
+            placeholder="Novo Comentário"
+            value={this.state.newComment}
+            onChange={this.handleInputChange}
+          />
+          <button type="submit">Novo Comentário</button>
+        </form>
       </div>
     );
   }

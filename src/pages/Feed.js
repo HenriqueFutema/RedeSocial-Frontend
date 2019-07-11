@@ -44,8 +44,6 @@ export default class Feed extends Component {
     io.on("post", data => {
       this.setState({ posts: [data, ...this.state.posts] });
     });
-
-
   };
 
   handleInputChange = e => {
@@ -125,7 +123,13 @@ export default class Feed extends Component {
             </form>
           </div>
           {this.state.posts.map(post => (
-            <Post key={post._id} post={post} handleLike={this.handleLike} />
+            <Post
+              key={post._id}
+              id={post._id}
+              post={post}
+              handleLike={this.handleLike}
+              token={this.state.token}
+            />
           ))}
         </div>
       </div>
