@@ -50,20 +50,21 @@ export default class Post extends Component {
         <form onSubmit={this.handleCommentSubmit}>
           <input
             type="text"
-            className="col col-lg-9 m-2 form-control"
+            className="col col-lg-12 my-2 form-control"
             placeholder="Novo Comentário"
             value={this.state.newComment}
             onChange={this.handleInputChange}
           />
-          <button type="submit" className="col-12 col-lg-2 m-2 btn btn-success">
+          <button
+            type="submit"
+            className="col-12 col-lg-12 my-2 btn btn-success"
+          >
             Novo Comentário
           </button>
         </form>
-        <div>
-          {this.props.post.comments.map(comment => (
-            <Comment comment={comment} token={this.props.token} />
-          ))}
-        </div>
+        {this.props.post.comments.map(comment => (
+          <Comment comment={comment} token={this.props.token} />
+        ))}
       </div>
     );
   }

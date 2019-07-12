@@ -21,8 +21,9 @@ export default class Comment extends Component {
   render() {
     return (
       <div>
-        <div className="col-12 col-lg-12 border rounded my-2 p-4">
-          <p className="float-right">{this.state.user}</p>
+        <div className="col-12 col-lg-12 border rounded my-2">
+          <h6 className="mb-2 mt-2">{this.state.user}</h6>
+          <p>{this.props.comment.content}</p>
         </div>
       </div>
     );
