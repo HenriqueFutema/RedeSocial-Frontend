@@ -8,8 +8,6 @@ export default class Comment extends Component {
   };
 
   async componentDidMount() {
-    console.log(this.props.token);
-
     const user = await api.get(`user/${this.props.comment.author}`, {
       headers: { Authorization: "Bearer " + this.props.token }
     });

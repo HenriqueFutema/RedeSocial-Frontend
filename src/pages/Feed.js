@@ -6,6 +6,8 @@ import socket from "socket.io-client";
 import Post from "../components/Post";
 import swal from "sweetalert";
 
+let test;
+
 export default class Feed extends Component {
   state = {
     name: "",
@@ -30,8 +32,6 @@ export default class Feed extends Component {
       headers: { Authorization: "Bearer " + this.state.token }
     });
 
-    console.log(posts.data.docs);
-    console.log(token);
     this.setState({
       posts: posts.data.docs
     });
@@ -46,13 +46,15 @@ export default class Feed extends Component {
     });
   };
 
+  myFunction() {
+    test = setInterval(this.componentDidMount, 3000);
+  }
+
   handleInputChange = e => {
     this.setState({ content: e.target.value });
   };
 
   handleNewPost = async e => {
-    console.log("test");
-
     e.preventDefault();
 
     const { content, token } = this.state;
@@ -70,7 +72,6 @@ export default class Feed extends Component {
   };
 
   handleLike = async id => {
-    console.log(id);
     const token = await sessionStorage.getItem("token");
 
     await api.post(
