@@ -4,6 +4,8 @@ import api from "../services/api";
 import moment from "moment";
 import swal from "sweetalert";
 
+import Comment from "./CommentComponent";
+
 export default class Post extends Component {
   state = {
     newComment: ""
@@ -48,7 +50,7 @@ export default class Post extends Component {
         <form onSubmit={this.handleCommentSubmit}>
           <input
             type="text"
-            className="col col-lg-9 m-2"
+            className="col col-lg-9 m-2 form-control"
             placeholder="Novo Comentário"
             value={this.state.newComment}
             onChange={this.handleInputChange}
@@ -57,6 +59,11 @@ export default class Post extends Component {
             Novo Comentário
           </button>
         </form>
+        <div>
+          {this.props.post.comments.map(comment => (
+            <Comment comment={comment} token={this.props.token} />
+          ))}
+        </div>
       </div>
     );
   }
