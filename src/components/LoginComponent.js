@@ -17,19 +17,28 @@ export default class LoginForm extends Component {
     console.log(this.state.email, this.state.password);
 
     const { email, password } = this.state;
+    let err = "";
+    const user = await api
+      .post("users/signin", { email, password })
+      .catch(function(error) {
+        swal(`Erro`, "Email ou senha inválida", "error");
+        err = error.response.status;
+      });
 
-    const user = await api.post("users/signin", { email, password });
+    console.log(err);
+    if (err === "") {
+      const { token } = user.data;
+      const { name } = user.data.user;
 
-    const { token } = user.data;
-    const { name } = user.data.user;
+      console.log(token, name);
 
-    sessionStorage.setItem("token", token);
-    localStorage.setItem("user", name);
+      swal(`Olá`, "Seja muit Bem Vindo", "success");
 
-    console.log(sessionStorage.getItem("token"));
-    swal("Logado com Sucesso", "Seja Bem Vindo", "success");
+      sessionStorage.setItem("token", token);
+      localStorage.setItem("user", name);
 
-    this.props.onRedirectFeed();
+      this.props.onRedirectFeed();
+    }
   };
 
   render() {

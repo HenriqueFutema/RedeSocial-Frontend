@@ -63,7 +63,11 @@ export default class Post extends Component {
           </button>
         </form>
         {this.props.post.comments.map(comment => (
-          <Comment comment={comment} token={this.props.token} />
+          <Comment
+            comment={comment}
+            token={this.props.token}
+            key={comment._id}
+          />
         ))}
       </div>
     );
